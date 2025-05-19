@@ -34,9 +34,9 @@
             <h1>Inicia Sesión</h1>
             <p>Accede a tus finanzas y retoma el control de tu futuro.</p>
             
-            <form class="login-form">
-                <input type="email" placeholder="Correo electrónico" required>
-                <input type="password" placeholder="Contraseña" required>
+            <form action="inicio_sesion.php" method="post" class="login-form">
+                <input type="email" name="correo"  placeholder="Correo electrónico" required>
+                <input type="password" name="clave"  placeholder="contraseña" required>
                 <button type="submit" class="cta-button">Entrar</button>
             </form>
         </main>
