@@ -3,24 +3,41 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class Conexion {
-    public static void main(String[] args) {
-        Connection connection = null;
+    private final String dbURL;
+
+    public Conexion(String dbURL) {
+        this.dbURL = dbURL;
         try {
-            // 1. Cargar el driver JDBC (esto se puede omitir en versiones recientes de Java)
+            // Cargar el driver JDBC (esto se puede omitir en versiones recientes de Java)
             Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            System.err.println("No se encontró el driver JDBC de SQLite.");
+            e.printStackTrace();
+        }
+    }
 
-            // 2. Establecer la conexión
-            String dbURL = "jdbc:sqlite:usuarios.db"; // Ruta al archivo de tu base de datos
-            connection = DriverManager.getConnection(dbURL);
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(dbURL);
+    }
 
-            System.out.println("Conexión a la base de datos SQLite establecida.");
+    public void closeConnection(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.close();
+                System.out.println("Conexión a la base de datos cerrada.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar la conexión.");
+            e.printStackTrace();
+        }
+    }
 
-            // 3. Crear una tabla (si no existe)
-            Statement statement = connection.createStatement();
+    public void createTableIfNotExists() {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS usuarios (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "nombre TEXT NOT NULL," +
@@ -29,55 +46,56 @@ public class Conexion {
                     "numero TEXT NOT NULL)";
             statement.executeUpdate(createTableSQL);
             System.out.println("Tabla 'usuarios' creada (si no existía).");
-
-            // 4. Insertar datos
-            String insertSQL = "INSERT INTO usuarios (nombre, correo, contraseña, numero) VALUES ('Mateo', 'mateo7112@gmail.com', '123454321', '3126320524')";
-            statement.executeUpdate(insertSQL);
-            System.out.println("Datos insertados.");
-
-            // Otra forma de insertar datos usando PreparedStatement (más seguro contra inyección SQL)
-            /*String insertPreparedSQL = "INSERT INTO usuarios (nombre, edad) VALUES (?, ?)";
-            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(insertPreparedSQL);
-            preparedStatement.setString(1, "María");
-            preparedStatement.setInt(2, 25);
-            preparedStatement.executeUpdate();
-            System.out.println("Más datos insertados.");
-            preparedStatement.close();*/
-
-            // 5. Consultar datos
-            String selectSQL = "SELECT * FROM usuarios";
-            ResultSet resultSet = statement.executeQuery(selectSQL);
-
-            /*System.out.println("\nDatos en la tabla 'usuarios':");
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nombre = resultSet.getString("nombre");
-                int edad = resultSet.getInt("edad");
-                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad);
-            }*/
-
-            // Cerrar recursos
-            resultSet.close();
-            statement.close();
-
-        } catch (ClassNotFoundException e) {
-            System.err.println("No se encontró el driver JDBC de SQLite.");
-            e.printStackTrace();
         } catch (SQLException e) {
-            System.err.println("Error al conectar o interactuar con la base de datos.");
+            System.err.println("Error al crear la tabla.");
             e.printStackTrace();
-        } finally {
-            // 6. Cerrar la conexión
-            try {
-                if (connection != null) {
-                    connection.close();
-                    System.out.println("Conexión a la base de datos cerrada.");
-                }
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexión.");
-                e.printStackTrace();
-            }
+        }
+    }
 
+    public void insertData(String nombre, String correo, String contraseña, String numero) {
+        String insertSQL = "INSERT INTO usuarios (nombre, correo, contraseña, numero) VALUES (?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+            preparedStatement.setString(1, nombre);
+            preparedStatement.setString(2, correo);
+            preparedStatement.setString(3, contraseña);
+            preparedStatement.setString(4, numero);
+            preparedStatement.executeUpdate();
+            System.out.println("Datos insertados.");
+        } catch (SQLException e) {
+            System.err.println("Error al insertar datos.");
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getAllUsuarios() {
+        String selectSQL = "SELECT * FROM usuarios";
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSQL)) {
+            System.out.println("\nDatos en la tabla 'usuarios':");
+            return resultSet; // OJO: La conexión se cierra al salir del try-with-resources
+            // Considera retornar una lista de objetos Usuario en lugar del ResultSet directamente
+        } catch (SQLException e) {
+            System.err.println("Error al consultar usuarios.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Ejemplo de método para obtener un usuario por ID
+    public ResultSet getUsuarioById(int id) {
+        String selectSQL = "SELECT * FROM usuarios WHERE id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet; // Considera retornar un objeto Usuario en lugar del ResultSet directamente
+        } catch (SQLException e) {
+            System.err.println("Error al consultar usuario por ID.");
+            e.printStackTrace();
+            return null;
         }
     }
 }
+
