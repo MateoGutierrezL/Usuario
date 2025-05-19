@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro - Clear Counts</title>
+    <link rel="stylesheet" href="registro.css" />
 </head>
 <body>
-    
+
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">Clear<span>Counts</span></div>
+            <nav>
+                <ul>
+                    <li><a href="../inicio/index.html" class="login-btn">Inicio</a></li>
+                    <li><a href="registro.html" class="register-btn">Registrarse</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="hero">
+            <h1>Regístrate</h1>
+            <p>Crea tu cuenta para empezar a controlar tus finanzas.</p>
+
+            <form class="register-form">
+                <input type="text" placeholder="Nombre completo" required />
+                <input type="email" placeholder="Correo electrónico" required />
+                <input type="password" placeholder="Contraseña" required />
+                <input type="password" placeholder="Confirmar contraseña" required />
+                <button type="submit" class="cta-button">Crear Cuenta</button>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ClearCounts. Todos los derechos reservados.</p>
+    </footer>
+
 </body>
 </html>
