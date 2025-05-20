@@ -1,0 +1,89 @@
+@import url('../index.css');
+
+.contenido {
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 1s ease-out;
+}
+
+.contenido section {
+    margin-bottom: 60px;
+}
+
+.contenido h1, .contenido h2 {
+    color: var(--hover-glow);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+
+.contenido h1 {
+    font-size: 3em;
+    text-align: center;
+}
+
+.contenido h2 {
+    font-size: 2em;
+}
+
+.contenido p {
+    font-size: 1.2em;
+    line-height: 1.7;
+    color: rgba(240, 248, 255, 0.9);
+    text-align: justify;
+}
+.info-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(80, 168, 242, 0.2);
+    margin: 50px 0;
+    animation: fadeInUp 1s ease-in-out;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(80, 168, 242, 0.2);
+}
+
+.info-box h2 {
+    font-size: 2em;
+    color: var(--hover-glow);
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.info-box p {
+    font-size: 1.2em;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+.ubicacion {
+    background-color: rgba(32, 82, 149, 0.15); /* Azul acento semi-transparente */
+    border: 2px solid var(--accent-blue);
+    padding: 40px 25px;
+    border-radius: 20px;
+    margin: 40px auto;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    max-width: 900px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.ubicacion h2 {
+    font-size: 2em;
+    color: var(--hover-glow);
+    margin-bottom: 20px;
+}
+
+.ubicacion p {
+    font-size: 1.2em;
+    margin-bottom: 25px;
+    color: rgba(240, 248, 255, 0.85);
+}
+
+.mapa-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
