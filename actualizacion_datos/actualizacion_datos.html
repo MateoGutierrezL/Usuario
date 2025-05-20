@@ -24,6 +24,7 @@
             <nav>
                 <ul>
                     <li><a href="../index.html" class="login-btn">Inicio</a></li>
+                    <li><a href="../nosotros/nosotros.html" class="login-btn">Nosotros</a></li>
                 </ul>
             </nav>
         </header>
@@ -32,11 +33,11 @@
             <h1>Actualizar Información</h1>
             <p>Modifica tus datos de cuenta según sea necesario.</p>
 
-            <form class="update-form">
-                <input type="text" placeholder="Nombre completo" required />
-                <input type="email" placeholder="Correo electrónico" required />
-                <input type="tel" placeholder="Número de teléfono" required />
-                <input type="password" placeholder="Nueva contraseña" />
+            <form action="actualizacion_datos.php" method="post" class="update-form">
+                <input type="text" name="nombre"  placeholder="Nombre completo" required />
+                <input type="email" name="correo" placeholder="Correo electrónico" required />
+                <input type="tel" name="numero" placeholder="Número de teléfono" required />
+                <input type="password" name="clave" placeholder="Nueva contraseña" />
                 <button type="submit" class="cta-button">Guardar Cambios</button>
             </form>
         </main>

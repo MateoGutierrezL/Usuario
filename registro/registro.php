@@ -22,6 +22,17 @@ if (empty($nombre) || empty($correo) || empty($contraseña)) {
     die("Todos los campos son obligatorios.");
 }
 
+// Verificar si el correo ya está registrado
+$check_stmt = $db->prepare("SELECT COUNT(*) FROM usuarios WHERE correo = :correo");
+$check_stmt->bindValue(':correo', $correo, SQLITE3_TEXT);
+$result = $check_stmt->execute();
+$count = $result->fetchArray()[0];
+
+if ($count > 0) {
+    header("Location: registro.html?error=correo");
+    exit;
+}
+
 // Hashear la contraseña antes de guardarla
 $hash = password_hash($contraseña, PASSWORD_DEFAULT);
 
@@ -36,10 +47,6 @@ try {
     $stmt->execute();
     echo "<h1>¡Registro exitoso!</h1>";
 } catch (Exception $e) {
-    if (str_contains($e->getMessage(), 'UNIQUE')) {
-        echo "Este correo ya está registrado.";
-    } else {
-        echo "Error: " . $e->getMessage();
-    }
+    echo "Error: " . $e->getMessage();
 }
 ?>

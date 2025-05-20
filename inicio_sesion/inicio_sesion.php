@@ -25,7 +25,7 @@ try {
     $resultado = $stmt->fetch();
 
     if ($resultado) {
-        header("Location: ../actualizacion_datos/actualizacion_datos.html");
+        header("Location: ../nosotros/nosotros.html");
         exit;
     } else {
         echo '<div class="center-container">
