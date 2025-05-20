@@ -40,8 +40,23 @@
                 <input type="tel" name="numero" placeholder="Número de teléfono" pattern="[0-9]{10}" required />
                 <button type="submit" class="cta-button">Crear Cuenta</button>
             </form>
+            <div id="error-message" class="error-container" style="display: none;">
+                <h2>¡Oops! Este correo ya está registrado</h2>
+                <p>Ya existe una cuenta con este correo. Puedes iniciar sesión.</p>
+                <a href="../inicio_sesion/inicio_sesion.html" class="cta-button">Iniciar sesión</a>
+            </div>
         </main>
     </div>
+    <script>
+    function verificarError() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'correo') {
+            document.getElementById('error-message').style.display = 'block';
+        }
+    }
+    window.onload = verificarError;
+</script>
+
 
     <footer>
         <p>&copy; 2025 ClearCounts. Todos los derechos reservados.</p>
