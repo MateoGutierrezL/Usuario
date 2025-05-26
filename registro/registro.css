@@ -218,4 +218,36 @@ nav a.register-btn:hover {
     }
 }
 
+.error-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    max-width: 500px;
+    margin: 50px auto;
+    animation: fadeInUp 1s ease-out;
+}
+
+.error-container h2 {
+    font-size: 2em;
+    color: var(--hover-glow);
+    margin-bottom: 15px;
+}
+
+.error-container p {
+    font-size: 1.2em;
+    color: rgba(240, 248, 255, 0.85);
+    margin-bottom: 20px;
+}
+
+.error-container .cta-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 12px 25px;
+}
+
+.error-container .cta-button.secondary {
+    background-color: var(--accent-blue);
+}
 
